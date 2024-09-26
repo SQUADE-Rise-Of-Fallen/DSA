@@ -9,7 +9,7 @@ push(3)
 pop()
 push(4)
 pop()
-Output: 3 4 */
+Output: 3 4  */
 #include <iostream>
 using namespace std;
 class Stack
