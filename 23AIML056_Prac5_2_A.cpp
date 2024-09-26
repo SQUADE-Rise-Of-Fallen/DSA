@@ -11,7 +11,7 @@ Queries =
 2
 1 4
 2
-Output: 2 3 */
+Output: 2 3  */
 
 #include <iostream>
 using namespace std;
