@@ -7,77 +7,141 @@
 (f) Binary Tree Level Order Traversal
 Note: for (a) and (b) , First node will be the root node. Display the content of Binary Tree  as per Inorder, Preorder, Postorder and Level Order Traversal. */
 #include <iostream>
-using namespace std;
-class BinaryTree
-{
-    int data;
-    BinaryTree *l, *r;
-    BinaryTree *Root;
+#include <queue>
 
+using namespace std;
+
+class Node
+{
 public:
-    BinaryTree()
-    {
-        data = 0;
-        l = NULL;
-        r = NULL;
-        Root = NULL;
-    }
-    BinaryTree(int value)
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int value)
     {
         data = value;
-        l = NULL;
-        r = NULL;
-        Root = NULL;
+        left = nullptr;
+        right = nullptr;
     }
-    void insertLeft(BinaryTree *root, int val)
+};
+
+class BinaryTree
+{
+public:
+    Node *root;
+
+    BinaryTree()
     {
-        if (root == NULL)
-            root = new BinaryTree(val);
-        else if (root->l == NULL)
-            root->l = new BinaryTree(val);
+        root = nullptr;
+    }
+
+    void insertLeft(int value)
+    {
+        if (root == nullptr)
+        {
+            root = new Node(value);
+        }
         else
-            insertLeft(root->l, val);
+        {
+            Node *newNode = new Node(value);
+            newNode->right = root->left;
+            root->left = newNode;
+        }
     }
-    void insertRight(BinaryTree *root, int val)
+    void insertRight(int value)
     {
-        if (root == NULL)
-            root = new BinaryTree(val);
-        else if (root->r == NULL)
-            root->r = new BinaryTree(val);
+        if (root == nullptr)
+        {
+            root = new Node(value);
+        }
         else
-            insertLeft(root->r, val);
-    }
-    void preorderTraversal(BinaryTree *root)
-    {
-        if (root != NULL)
         {
-            cout << root->data << " ";
-            preorderTraversal(root->l);
-            preorderTraversal(root->r);
+            Node *newNode = new Node(value);
+            newNode->left = root->right;
+            root->right = newNode;
         }
     }
-    void postorderTraversal(BinaryTree *root)
+
+    void deleteLeft()
     {
-        if (root != NULL)
+        if (root != nullptr && root->left != nullptr)
         {
-            postorderTraversal(root->l);
-            postorderTraversal(root->r);
-            cout << root->data << " ";
+            Node *toDelete = root->left;
+            root->left = toDelete->right;
+            delete toDelete;
         }
     }
-    void inorderTraversal(BinaryTree *root)
+    void deleteRight()
     {
-        if (root != NULL)
+        if (root != nullptr && root->right != nullptr)
         {
-            inorderTraversal(root->l);
-            cout << root->data << " ";
-            inorderTraversal(root->r);
+            Node *toDelete = root->right;
+            root->right = toDelete->left;
+            delete toDelete;
         }
     }
-    void levelorderTraversal(BinaryTree *root)
+
+    void inorderTraversal(Node *node)
     {
-        int x;
+        if (node == nullptr)
+        {
+            return;
+        }
+        inorderTraversal(node->left);
+        cout << node->data << " ";
+        inorderTraversal(node->right);
     }
+
+    void preorderTraversal(Node *node)
+    {
+        if (node == nullptr)
+        {
+            return;
+        }
+        cout << node->data << " ";
+        preorderTraversal(node->left);
+        preorderTraversal(node->right);
+    }
+
+    void postorderTraversal(Node *node)
+    {
+        if (node == nullptr)
+        {
+            return;
+        }
+        postorderTraversal(node->left);
+        postorderTraversal(node->right);
+        cout << node->data << " ";
+    }
+
+    void levelOrderTraversal()
+    {
+        if (root == nullptr)
+        {
+            return;
+        }
+
+        queue<Node *> q;
+        q.push(root);
+
+        while (!q.empty())
+        {
+            Node *current = q.front();
+            q.pop();
+            cout << current->data << " ";
+
+            if (current->left != nullptr)
+            {
+                q.push(current->left);
+            }
+            if (current->right != nullptr)
+            {
+                q.push(current->right);
+            }
+        }
+    }
+
     void menu()
     {
         char again, choice;
@@ -86,7 +150,12 @@ public:
         {
             cout << "(a) Insert a node at Left" << endl
                  << "(b) Insert a node at Right" << endl
-                 << "(c) Preorder Traversal" << endl;
+                 << "(c) Preorder Traversal" << endl
+                 << "(d) Postorder Traversal" << endl
+                 << "(e) inorder Traversal" << endl
+                 << "(f) levelorder Traversal" << endl
+                 << "(g) Delete Left" << endl
+                 << "(h) Delete Right" << endl;
             cout << "Enter Your Choice : ";
             cin >> choice;
             switch (choice)
@@ -94,24 +163,34 @@ public:
             case 'a':
                 cout << "Enter the value to insert at left: ";
                 cin >> n;
-                insertLeft(Root, n);
+                insertLeft(n);
                 break;
             case 'b':
                 cout << "Enter the value to insert at right: ";
                 cin >> n;
-                insertRight(Root, n);
+                insertRight(n);
                 break;
             case 'c':
-                preorderTraversal(Root);
+                preorderTraversal(root);
+                cout << endl;
                 break;
             case 'd':
-                postorderTraversal(Root);
+                postorderTraversal(root);
+                cout << endl;
                 break;
             case 'e':
-                inorderTraversal(Root);
+                inorderTraversal(root);
+                cout << endl;
                 break;
             case 'f':
-                levelorderTraversal(Root);
+                levelOrderTraversal();
+                cout << endl;
+                break;
+            case 'g':
+                deleteLeft();
+                break;
+            case 'h':
+                deleteRight();
                 break;
             default:
                 cout << "Invalid Choice" << endl;
@@ -121,8 +200,10 @@ public:
         } while (again == 'Y' || again == 'y');
     }
 };
+
 int main()
 {
-    BinaryTree t;
-    t.menu();
+    BinaryTree bt;
+    bt.menu();
+    return 0;
 }
