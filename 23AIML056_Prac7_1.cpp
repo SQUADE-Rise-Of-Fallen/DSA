@@ -52,7 +52,14 @@ public:
         else
             return search(root->right, val);
     }
-
+    void display(Node *root)
+    {
+        if (root == nullptr)
+            return;
+        cout << root->data << " ";
+        display(root->left);
+        display(root->right);
+    }
     void menu()
     {
         int choice, val;
@@ -61,7 +68,8 @@ public:
         {
             cout << "1. Insert" << endl
                  << "2. Search" << endl
-                 << "3. Exit" << endl;
+                 << "3. Display" << endl
+                 << "4. Exit" << endl;
             cout << "Enter your choice: ";
             cin >> choice;
             switch (choice)
@@ -83,6 +91,13 @@ public:
                 break;
             }
             case 3:
+            {
+                cout << "Binary Search Tree: ";
+                display(root);
+                cout << endl;
+                break;
+            }
+            case 4:
                 cout << "Exiting..." << endl;
                 exit(0);
             default:
