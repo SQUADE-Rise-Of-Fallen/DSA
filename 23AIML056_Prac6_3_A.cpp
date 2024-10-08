@@ -9,8 +9,8 @@ Output: [1,3]
 Example 3:
 Input: root = []
 Output: []*/
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 using namespace std;
 class TreeNode
 {
@@ -49,13 +49,26 @@ public:
 };
 int main()
 {
-    BinaryTree tree;
-    tree.root = new TreeNode(1);
-    tree.root->left = new TreeNode(2);
-    tree.root->right = new TreeNode(3);
-    tree.root->left->left = new TreeNode(4);
-    tree.root->left->right = new TreeNode(5);
-    vector<int> ans = tree.rightSideView(tree.root);
+    BinaryTree tree1;
+    tree1.root = new TreeNode(1);
+    tree1.root->left = new TreeNode(2);
+    tree1.root->right = new TreeNode(3);
+    tree1.root->left->left = new TreeNode(4);
+    tree1.root->left->right = new TreeNode(5);
+    vector<int> ans = tree1.rightSideView(tree1.root);
+    cout << "Tree 1 : ";
+    for (int i : ans)
+        cout << i << " ";
+    BinaryTree tree2;
+    tree2.root = new TreeNode(1);
+    tree2.root->right = new TreeNode(3);
+    ans = tree2.rightSideView(tree2.root);
+    cout << "\nTree 2 : ";
+    for (int i : ans)
+        cout << i << " ";
+    BinaryTree tree3;
+    ans = tree3.rightSideView(tree3.root);
+    cout << "\nTree 3 : ";
     for (int i : ans)
         cout << i << " ";
     return 0;
