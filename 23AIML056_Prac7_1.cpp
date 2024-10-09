@@ -68,8 +68,7 @@ public:
         {
             cout << "1. Insert" << endl
                  << "2. Search" << endl
-                 << "3. Display" << endl
-                 << "4. Exit" << endl;
+                 << "3. Display" << endl;
             cout << "Enter your choice: ";
             cin >> choice;
             switch (choice)
@@ -85,9 +84,16 @@ public:
                 cin >> val;
                 Node *foundNode = search(root, val);
                 if (foundNode != nullptr)
-                    cout << "Found node: " << foundNode->data << endl;
+                {
+                    cout << "Found node: " << foundNode->data << " ";
+                    if (foundNode->left != nullptr)
+                        cout << foundNode->left->data << " ";
+                    if (foundNode->right != nullptr)
+                        cout << foundNode->right->data;
+                }
                 else
-                    cout << "Node not found." << endl;
+                    cout << "Node not found.";
+                cout << endl;
                 break;
             }
             case 3:
@@ -97,11 +103,8 @@ public:
                 cout << endl;
                 break;
             }
-            case 4:
-                cout << "Exiting..." << endl;
-                exit(0);
             default:
-                cout << "Invalid choice. Please try again.\n";
+                cout << "Invalid choice." << endl;
             }
             cout << "Enter y to Continue : ";
             cin >> again;
