@@ -33,3 +33,5 @@ Practical 5.2 & B - 29/8/2024
 Practical 5.3 B & C - 25/9/2024
 
 Practical 5.3 A & D, 6.1 - 26/9/2024
+
+Practical 6.2 to 8.3 - 9/10/2024
